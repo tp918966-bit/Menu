@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delhi Dhabba — Smart Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Raleway:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--g:#c9a84c;--gh:#f0d080;--gd:#8b6914;--bg:#0a0805;--cs:#110e08;--bd:#2a2010;--veg:#4caf50;--nv:#e53935}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:#e8dcc0;font:400 15px Raleway,sans-serif;min-height:100vh}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;z-index:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)'/%3E%3C/svg%3E")}
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;background:none;border:0}
+nav{position:sticky;top:0;z-index:30;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#0a0805ee;backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+.brand{font:700 15px Cinzel,serif;color:var(--gh)}
+.chip{border:1px solid var(--g);color:var(--gh);border-radius:20px;padding:6px 12px;font-size:13px;font-weight:500}
+.ci{position:relative;font-size:22px;padding:4px 8px}
+.bdg{position:absolute;top:-4px;right:-2px;min-width:18px;height:18px;border-radius:9px;background:var(--g);color:#000;font:700 11px/18px Raleway;text-align:center}
+.bump{animation:bump .4s}@keyframes bump{40%{transform:scale(1.35)}}
+main{position:relative;z-index:2}
+.hero{text-align:center;padding:48px 16px 28px;animation:fd .9s both}@keyframes fd{from{opacity:0;transform:translateY(-24px)}}
+.hero h1{font:700 clamp(32px,8vw,60px) "Cinzel Decorative",serif;color:var(--gh);text-shadow:0 0 24px #c9a84c88,0 0 60px #c9a84c44}
+.hero p{margin-top:10px;font:italic 400 15px Raleway;color:#a89870}
+#tabs{position:sticky;top:56px;z-index:25;display:flex;gap:8px;overflow-x:auto;padding:10px 14px 12px;background:#0a0805ee;backdrop-filter:blur(10px);scrollbar-width:none}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{position:relative;z-index:1;white-space:nowrap;padding:7px 14px;border-radius:20px;font:500 13px Raleway;color:#a89870;animation:sl .5s both}
+@keyframes sl{from{opacity:0;transform:translateX(30px)}}
+#tabs button.a{color:#000;font-weight:600}
+#ind{position:absolute;top:10px;left:0;height:33px;border-radius:20px;background:linear-gradient(135deg,var(--gh),var(--g));box-shadow:0 0 16px #c9a84c99;transition:.35s;width:0}
+.tools{display:flex;flex-wrap:wrap;gap:8px;padding:6px 14px 14px;align-items:center}
+.sb{flex:1 1 200px;position:relative}.sb input{width:100%;padding:10px 34px 10px 14px;background:var(--cs);border:1px solid var(--bd);border-radius:12px;outline:0}
+.sb input:focus{border-color:var(--g)}.sb button{position:absolute;right:8px;top:8px;color:#a89870;font-size:18px}
+.fc button{padding:6px 12px;border:1px solid var(--bd);border-radius:16px;font-size:13px;margin-right:6px;color:#a89870}
+.fc button.a{border-color:var(--g);color:var(--gh);background:#c9a84c1f}
+select{background:var(--cs);border:1px solid var(--bd);border-radius:10px;padding:8px}
+section{padding:0 14px 8px;scroll-margin-top:120px}
+.sh{font:700 22px Cinzel,serif;color:var(--g);margin:18px 0 14px}
+.sh:after{content:"";display:block;height:2px;width:0;margin-top:6px;background:linear-gradient(90deg,var(--g),transparent);animation:ul 1s .3s forwards}@keyframes ul{to{width:140px}}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}@media(min-width:1280px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:#110e08bb;backdrop-filter:blur(8px);border:1px solid var(--bd);border-radius:14px;padding:14px;transition:.5s,border-color .3s}
+.card.on{border-color:var(--g)}.card.fl{animation:fl .6s}@keyframes fl{0%{box-shadow:0 0 0 0 #c9a84cbb}100%{box-shadow:0 0 0 16px #0000}}
+.rv{opacity:0;transform:translateY(18px)}.rv.in{opacity:1;transform:none}
+.sk{height:120px;background:linear-gradient(90deg,#110e08 30%,#221a0c 50%,#110e08 70%);background-size:300% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-100% 0}}
+.top{display:flex;gap:10px;align-items:flex-start}.top h3{flex:1;font:600 16px Raleway}
+.dot{flex:none;width:16px;height:16px;border:2px solid;margin-top:2px;display:grid;place-items:center}.dot i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.dot.v{color:var(--veg)}.dot.n{color:var(--nv)}
+.pr{font:700 16px Cinzel,serif;background:linear-gradient(135deg,var(--gh),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ds{font:italic 400 13px/1.4 Raleway;color:#948665;margin:6px 0 10px 26px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;align-items:center;gap:8px;margin-left:26px;flex-wrap:wrap}
+.bg{font-size:11px;font-weight:600;color:var(--gh);border:1px solid var(--gd);border-radius:10px;padding:2px 8px}
+.st{margin-left:auto;display:flex;align-items:center;border:1px solid var(--g);border-radius:18px;overflow:hidden}
+.st button{width:32px;height:30px;font-size:18px;color:var(--gh)}.st button:disabled{opacity:.3;cursor:default}
+.st span{min-width:26px;text-align:center;font-weight:600}.st.sm button{width:28px;height:26px}
+.pop{animation:pp .3s}@keyframes pp{0%{transform:translateY(-8px);opacity:0}}
+.empty{text-align:center;padding:40px 16px;color:#948665}.empty svg{width:90px;margin-bottom:10px}
+.foot{text-align:center;color:#6f6448;font-size:12px;padding:24px 14px 100px}
+#cart{position:fixed;z-index:40;background:#0d0a06;border:1px solid var(--bd);display:flex;flex-direction:column}
+#cart h2{font:700 18px Cinzel,serif;color:var(--gh);padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between}
+#lines{flex:1;overflow:auto;padding:4px 16px}
+.ln{padding:10px 0;border-bottom:1px solid var(--bd);transition:.3s;overflow:hidden;max-height:140px}
+.ln.out{transform:translateX(-100%);max-height:0;padding:0;opacity:0}
+.lt{display:flex;justify-content:space-between;gap:8px;font-weight:600}.lt span{color:var(--gh)}
+.lr{display:flex;justify-content:space-between;align-items:center;margin:6px 0}
+.ln input{width:100%;background:none;border:0;border-bottom:1px dashed var(--bd);font-size:12px;padding:4px 0;outline:0}
+.del{opacity:.7}
+#tot{padding:12px 16px;border-top:1px solid var(--bd);font-size:14px}
+#tot div{display:flex;justify-content:space-between;padding:2px 0;color:#a89870}
+#tot .gt{font:700 22px Cinzel,serif;color:var(--gh);margin-top:6px;padding-top:8px;border-top:1px solid var(--bd)}
+.acts{display:flex;gap:8px;padding:0 16px 16px}
+.btn{position:relative;overflow:hidden;flex:1;padding:13px;border-radius:12px;font-weight:600;background:linear-gradient(135deg,var(--gh),var(--g),var(--gd));color:#1a1204}
+.btn:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#fff8 50%,transparent 70%);transform:translateX(-120%)}
+.btn:hover:after{transform:translateX(120%);transition:.7s}.btn:active{transform:scale(.97)}
+.btn.o{flex:0 0 auto;background:none;border:1px solid var(--bd);color:#a89870;padding:13px 16px}
+#fab{position:fixed;right:16px;bottom:16px;z-index:35;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gh),var(--g));font-size:24px;display:none;align-items:center;justify-content:center;box-shadow:0 4px 20px #000a}
+#fab .bdg{background:#000;color:var(--gh);border:1px solid var(--g)}
+#scrim{position:fixed;inset:0;z-index:38;background:#0009;display:none}#scrim.show{display:block}
+#top{position:fixed;left:16px;bottom:16px;z-index:35;width:42px;height:42px;border-radius:50%;background:var(--cs);border:1px solid var(--g);color:var(--gh);opacity:0;pointer-events:none;transition:.3s}#top.show{opacity:1;pointer-events:auto}
+@media(max-width:1023px){#cart{left:0;right:0;bottom:0;max-height:85vh;border-radius:20px 20px 0 0;transform:translateY(105%);transition:.35s}#cart.open{transform:none}#fab{display:flex}}
+@media(min-width:1024px){#cart{top:0;right:0;bottom:0;width:340px;padding-top:56px}body{padding-right:340px}.x,.ci{display:none}}
+.md{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;background:#000b}.md.show{display:flex}
+.sheet{background:var(--cs);border:1px solid var(--g);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:92vh;overflow:auto;padding:20px;animation:up .35s}@keyframes up{from{transform:translateY(60px);opacity:0}}
+@media(min-width:640px){.md{align-items:center}.sheet{border-radius:20px}}
+.sheet h2{font:700 20px Cinzel,serif;color:var(--gh);margin-bottom:4px}.sheet>p{color:#948665;font-size:13px;margin-bottom:14px}
+.tg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.tb{position:relative;overflow:hidden;border:1px solid var(--bd);border-radius:12px;padding:10px 0;text-align:center;background:#0d0a06}
+.tb b{display:block;font:700 18px Cinzel,serif}.tb small{font-size:11px;color:#948665}
+.tb.a{border-color:var(--g);background:#c9a84c22;box-shadow:0 0 14px #c9a84c66}.tb.a:after{content:"✓";position:absolute;top:2px;right:6px;color:var(--gh);font-size:12px}
+.rp{position:absolute;border-radius:50%;background:#c9a84c88;width:10px;height:10px;animation:rp .6s forwards;pointer-events:none}@keyframes rp{to{transform:scale(14);opacity:0}}
+.fld{margin-bottom:12px}.fld label{display:block;font-size:12px;font-weight:500;color:#a89870;margin-bottom:4px}
+.fld input,.fld textarea{width:100%;background:#0d0a06;border:1px solid var(--bd);border-radius:10px;padding:10px;outline:0}
+.fld input:focus,.fld textarea:focus{border-color:var(--g)}
+.fld.err input{border-color:#e53935;animation:sk .4s}@keyframes sk{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fld em{display:none;font-style:normal;color:#ef6b67;font-size:12px}.fld.err em{display:block}
+.seg{display:flex;gap:8px;margin-bottom:12px}.seg button{flex:1;padding:10px;border:1px solid var(--bd);border-radius:10px}.seg .a{border-color:var(--g);color:var(--gh);background:#c9a84c1f}
+#snack{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);z-index:70;background:#221a0c;border:1px solid var(--g);border-radius:12px;padding:10px 16px;display:none;gap:14px;align-items:center;font-size:14px}
+#snack.show{display:flex;animation:up .3s forwards}#snack button{color:var(--gh);font-weight:600}
+#ok{position:fixed;inset:0;z-index:80;background:#0a0805f5;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;overflow:hidden}#ok.show{display:flex}
+#ok svg{width:110px}#ok circle,#ok path{stroke:var(--g);stroke-width:4;fill:none;stroke-dasharray:300;stroke-dashoffset:300;animation:dr .9s .1s forwards}#ok path{animation-delay:.7s;stroke-dasharray:60;stroke-dashoffset:60}@keyframes dr{to{stroke-dashoffset:0}}
+#ok h2{font:700 24px Cinzel,serif;color:var(--gh)}#ok p{color:#a89870;max-width:300px}
+.cf{position:absolute;top:-10px;width:8px;height:14px;animation:cf 2.5s linear forwards}@keyframes cf{to{transform:translateY(105vh) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+</style></head><body>
+<canvas id="fx"></canvas>
+<nav><span class="brand" id="bn"></span><div style="display:flex;align-items:center;gap:6px"><button class="chip" id="tb" onclick="openT()"></button><button class="ci" onclick="cartOpen(1)">🛒<span class="bdg" id="nb">0</span></button></div></nav>
+<main>
+<div class="hero"><h1 id="hn"></h1><p>Scan · Pick your dishes · Order on WhatsApp</p></div>
+<div id="tabs"><span id="ind"></span></div>
+<div class="tools" id="tools">
+<div class="sb"><input id="q" placeholder="Search dishes…" oninput="q=this.value.toLowerCase();render()"><button onclick="q$.value='';q='';render()" aria-label="Clear">×</button></div>
+<div class="fc" id="fc"></div>
+<select id="so" onchange="sort=this.value;render()"><option value="def">Default</option><option value="lo">Price: Low → High</option><option value="hi">Price: High → Low</option></select>
+</div>
+<div id="menu"></div>
+<div class="foot">All prices exclusive of applicable taxes</div>
+</main>
+<button id="fab" onclick="cartOpen(1)">🛒<span class="bdg" id="fb">0</span></button>
+<button id="top" onclick="scrollTo({top:0})" aria-label="Back to top">↑</button>
+<div id="scrim" onclick="cartOpen(0)"></div>
+<aside id="cart"><h2>Your Order <button class="x" onclick="cartOpen(0)">✕</button></h2><div id="lines"></div><div id="tot"></div>
+<div class="acts"><button class="btn o" onclick="clr()">Clear</button><button class="btn" onclick="openF()">Proceed to Order</button></div></aside>
+
+<div class="md" id="tm"><div class="sheet"><h2>Select Your Table</h2><p>Tap your table number, or choose takeaway.</p><div class="tg" id="tg"></div><button class="btn" style="width:100%" onclick="pick(null)">🥡 Takeaway / Pickup</button></div></div>
+
+<div class="md" id="fm" onclick="if(event.target==this)this.classList.remove('show')"><div class="sheet"><h2>Confirm Your Order</h2><p>We'll open WhatsApp with your order ready to send.</p>
+<div class="fld" id="f-n"><label>Name</label><input id="cn" autocomplete="name"><em>Enter your name</em></div>
+<div class="fld" id="f-p"><label>Phone (10 digits)</label><input id="cp" inputmode="numeric" maxlength="10" autocomplete="tel"><em>Enter a valid 10-digit phone number</em></div>
+<div class="seg"><button id="m-d" onclick="setM('dine')">Dine-in</button><button id="m-t" onclick="setM('take')">Takeaway</button></div>
+<div class="fld" id="f-t"><label>Table number</label><input id="ct" inputmode="numeric"><em id="te"></em></div>
+<div class="fld"><label>Special request for kitchen <span id="cc">0/150</span></label><textarea id="cs" rows="2" maxlength="150" oninput="cc.textContent=this.value.length+'/150'"></textarea></div>
+<button class="btn" style="width:100%" onclick="send()">Send Order on WhatsApp</button></div></div>
+
+<div id="snack"><span id="sm"></span><button onclick="undoRm()">Undo</button></div>
+<div id="ok"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/><path d="M28 52l16 16 30-34"/></svg><h2>Order sent!</h2><p>Complete the message in WhatsApp to place your order with the kitchen.</p><button class="btn" style="flex:none;padding:12px 30px" onclick="ok.classList.remove('show')">Back to menu</button></div>
+
+<script>
+const CONFIG={restaurantName:"Delhi Dhabba",whatsappNumber:"917011343807",gstPercent:5,packingCharge:10,currency:"₹",tableCount:20,
+tableCapacities:{small:[1,2,3,4],medium:[5,6,7,8,9,10],large:[11,12,13,14],vip:[15,16]},
+enableSearch:true,enableFilters:true,enableSpecialInstructions:true,accentColor:"#c9a84c"};
+
+// Badges: C = Chef's Special, F = Family, B = Bestseller, N = New. veg: 1 = veg, 0 = non-veg
+const M=[
+["Charcoal Grill",[
+["Chicken Thighs",15.5,"Juicy charcoal-grilled thighs with baked potato and garnish",0,0,"B"],
+["Chicken Breast",18,"Tender grilled breast with baked potato and garnish",0,0],
+["Chicken Skewer",19,"Marinated chicken on the skewer with baked potato and garnish",0,0],
+["Chicken Luljac",21,"Minced chicken kebab with baked potatoes and garnish",0,0],
+["Pork Neck",20,"Smoky, well-marbled pork neck with baked potatoes and garnish",0,0],
+["Pork Skewer",19.5,"Charcoal pork skewer with baked potatoes and garnish",0,0],
+["Pork Ribs",23,"Slow-grilled ribs with baked potatoes and garnish",0,0],
+["Pork Luljac",22,"Minced pork kebab with baked potatoes and garnish",0,0],
+["Pork Fillet",25,"Premium pork fillet with baked potatoes and garnish",0,0,"C"],
+["Kebapi",15.5,"Traditional premium beef mince fingers with baked potatoes",0,0,"B"],
+["Pleškavica",16,"Premium beef mince patty with baked potatoes and garnish",0,0,"B"],
+["Šarska Pleškavica",17,"Beef mince patty stuffed with cheese, with baked potatoes",0,0],
+["Gourmet Pleškavica",19,"Mince patty with cheese, beef prosciutto and chilli flakes",0,1,"C"],
+["Beef Skewer",25,"Tender beef on the skewer with baked potatoes and garnish",0,0,"C"],
+["Beef Fillet",33,"Premium beef fillet with baked potatoes and garnish",0,0,"C"]]],
+["Balkankan Specialities",[
+["Balkankan Speciality",25,"Beef patty with cheese, bresaole and kajmak, wrapped in pastry",0,0,"C"],
+["Balkankan Premium",27.5,"Beef patty with bacon, caramelized onions and kajmak in pastry",0,0,"C"],
+["Balkankan Royal",30,"Beef patty with cheese, beef prosciutto and kajmak in pastry",0,0,"C"],
+["Chicken Fillet in Bresaola",23,"Chicken breast, bresaola, sundried tomatoes and creamy pesto, with mashed potatoes",0,0],
+["Beef Medalions with Mushroom Sauce",28.5,"Beef medalions in creamy mushroom sauce with baked potatoes",0,0,"C"]]],
+["Traditional Dishes",[
+["Goulash",22,"Slow cooked beef stew with a side of mash potatoes",0,0,"B"],
+["Stuffed Peppers",17,"Premium pork and beef mince, rice and Balkan spices",0,0],
+["Tavče Gravče",10.5,"Traditional slow cooked beans dish",1,0],
+["Sarma",19,"Pork and beef mince with rice wrapped in fermented sour cabbage",0,0,"B"],
+["Letna Mandza",10.5,"Roasted peppers with tomato relish and egg (add sausage +2.50)",1,1],
+["Balkankan Sausages",15,"Pork and beef mince with leeks and spices, served with mash potatoes",0,0]]],
+["Sauces",[
+["Mushroom Sauce",3,"Creamy mushroom sauce, add more flavour",1,0],
+["Peppercorn Sauce",3,"Classic peppercorn sauce, add more flavour",1,0],
+["Tartar Sauce",3,"Tangy tartar sauce, add more flavour",1,0],
+["Honey Mustard Sauce",3,"Sweet and sharp honey mustard, add more flavour",1,0]]],
+["Sides",[
+["Mashed Potato",4,"Smooth, buttery mashed potato",1,0],
+["Baked Potato (pekarski)",3.5,"Oven-baked potato, Balkan style",1,0],
+["Jacked Potato (cheese & bacon)",7,"Loaded jacket potato with cheese and bacon",0,0],
+["Luta / Blaga Piperka",2.5,"Roasted pepper, hot or mild",1,2],
+["Kajmak",6,"Traditional creamy dairy spread",1,0],
+["Urnebes",5,"Spicy cheese and pepper salad",1,2]]]];
+const B={C:"Chef's Special",F:"Family",B:"Bestseller",N:"New"};
+const items=[];M.forEach(([c,l],ci)=>l.forEach(i=>items.push({id:items.length,ci,cat:c,n:i[0],p:i[1],d:i[2],v:i[3],s:i[4],b:i[5]})));
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],C=CONFIG,cur=C.currency;
+document.documentElement.style.setProperty('--g',C.accentColor);
+const LS=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},SV=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const fmt=n=>cur+n.toFixed(2),esc=s=>(s||'').replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';');
+let cart=LS('dd_cart')||{},table=LS('dd_table'),mode=LS('dd_mode'),f='all',q='',sort='def',undo=null,fmode='dine';
+const q$=$('#q'),cc=$('#cc'),ok=$('#ok');
+$('#bn').textContent=$('#hn').textContent=C.restaurantName;
+
+// Tabs
+const tabs=$('#tabs');
+['All',...M.map(m=>m[0])].forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.style.animationDelay=i*70+'ms';b.onclick=()=>{i?document.getElementById('s'+(i-1))?.scrollIntoView():scrollTo({top:0});act(i)};tabs.appendChild(b)});
+function act(i){const bs=$$('#tabs button');bs.forEach((b,k)=>b.classList.toggle('a',k==i));const b=bs[i],n=$('#ind');n.style.width=b.offsetWidth+'px';n.style.transform=`translateX(${b.offsetLeft-14}px)`;n.style.left='14px';tabs.scrollTo({left:b.offsetLeft-60,behavior:'smooth'})}
+// Filters
+if(C.enableFilters)[['all','All'],['veg','Veg Only'],['nv','Non-Veg'],['chef',"Chef's Special"]].forEach(([k,t])=>{const b=document.createElement('button');b.textContent=t;if(k=='all')b.className='a';b.onclick=()=>{f=k;$$('#fc button').forEach(x=>x.classList.toggle('a',x==b));render()};$('#fc').appendChild(b)});
+if(!C.enableSearch)$('.sb').style.display='none';
+
+// Menu
+const card=i=>`<div class="card rv" data-id="${i.id}"><div class="top"><span class="dot ${i.v?'v':'n'}"><i></i></span><h3>${i.n}</h3><b class="pr">${fmt(i.p)}</b></div><p class="ds">${i.d}</p><div class="meta">${i.b?`<span class="bg">${B[i.b]}</span>`:''}${i.s?`<span>${'🌶'.repeat(i.s)}</span>`:''}<div class="st"><button onclick="ch(${i.id},-1)" aria-label="Remove one">−</button><span data-q="${i.id}">0</span><button onclick="ch(${i.id},1)" aria-label="Add one">+</button></div></div></div>`;
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.08});
+function render(){
+ let l=items.filter(i=>(f=='all'||(f=='veg'&&i.v)||(f=='nv'&&!i.v)||(f=='chef'&&i.b=='C'))&&(i.n+' '+i.d+' '+i.cat).toLowerCase().includes(q));
+ if(sort!='def')l.sort((a,b)=>sort=='lo'?a.p-b.p:b.p-a.p);
+ $('#menu').innerHTML=l.length?M.map((m,ci)=>{const r=l.filter(i=>i.ci==ci);return r.length?`<section id="s${ci}"><h2 class="sh">${m[0]}</h2><div class="grid">${r.map(card).join('')}</div></section>`:''}).join(''):`<div class="empty"><svg viewBox="0 0 100 100" fill="none" stroke="#c9a84c" stroke-width="3"><circle cx="50" cy="50" r="34"/><path d="M30 42h4M66 42h4M36 68q14-12 28 0"/></svg><p>No dishes match your search.<br>Try another word or clear the filters.</p></div>`;
+ $$('.rv').forEach((e,k)=>{e.style.transitionDelay=(k%6)*60+'ms';io.observe(e)});sync()}
+function pop(e){e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
+function sync(){
+ $$('[data-q]').forEach(e=>{const n=cart[e.dataset.q]?.q||0;if(e.textContent!=n){e.textContent=n;pop(e)}e.previousElementSibling.disabled=!n;e.closest('.card').classList.toggle('on',n>0)});
+ rc()}
+function ch(id,d){const c=cart[id]||(cart[id]={q:0,note:''});c.q=Math.max(0,c.q+d);if(!c.q)delete cart[id];SV('dd_cart',cart);
+ if(d>0){const e=$(`.card[data-id="${id}"]`);if(e){e.classList.remove('fl');void e.offsetWidth;e.classList.add('fl')}bump()}sync()}
+function bump(){$$('.bdg').forEach(b=>{b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump')})}
+
+// Cart
+function totals(){const sub=Object.entries(cart).reduce((s,[id,c])=>s+items[id].p*c.q,0),gst=sub*C.gstPercent/100,pk=mode=='take'&&sub?C.packingCharge:0;return{sub,gst,pk,tot:sub+gst+pk}}
+function rc(){
+ const ids=Object.keys(cart),n=ids.reduce((s,i)=>s+cart[i].q,0);$('#nb').textContent=$('#fb').textContent=n;
+ $('#lines').innerHTML=ids.length?ids.map(id=>{const i=items[id],c=cart[id];return `<div class="ln" id="l${id}"><div class="lt"><b>${i.n}</b><span>${fmt(i.p*c.q)}</span></div><div class="lr"><div class="st sm"><button onclick="ch(${id},-1)">−</button><span>${c.q}</span><button onclick="ch(${id},1)">+</button></div><button class="del" onclick="rm(${id})" aria-label="Delete">🗑</button></div>${C.enableSpecialInstructions?`<input maxlength="150" placeholder="Add note (e.g. less spicy)" value="${esc(c.note)}" oninput="cart[${id}].note=this.value;SV('dd_cart',cart)">`:''}</div>`}).join(''):`<div class="empty"><svg viewBox="0 0 100 100" fill="none" stroke="#c9a84c" stroke-width="3"><path d="M15 25h12l8 40h40l8-30H32"/><circle cx="42" cy="78" r="5"/><circle cx="70" cy="78" r="5"/></svg><p>Your cart is empty.<br>Add a dish to get started.</p></div>`;
+ const t=totals();$('#tot').innerHTML=`<div><span>Subtotal</span><span>${fmt(t.sub)}</span></div><div><span>GST (${C.gstPercent}%)</span><span>${fmt(t.gst)}</span></div>${mode=='take'?`<div><span>Packing</span><span>${fmt(t.pk)}</span></div>`:''}<div class="gt"><span>Grand Total</span><span>${fmt(t.tot)}</span></div>`;
+ $('#tb').textContent=mode=='take'?'🥡 Takeaway':table?'🪑 Table '+table+' · Change':'Select table'}
+function cartOpen(o){$('#cart').classList.toggle('open',!!o);$('#scrim').classList.toggle('show',!!o)}
+function rm(id){const e=$('#l'+id);e.classList.add('out');undo={id,c:cart[id]};setTimeout(()=>{delete cart[id];SV('dd_cart',cart);sync();snack(items[id].n+' removed')},300)}
+function undoRm(){if(undo){cart[undo.id]=undo.c;undo=null;SV('dd_cart',cart);sync()}$('#snack').classList.remove('show')}
+let sT;function snack(t){$('#sm').textContent=t;$('#snack').classList.add('show');clearTimeout(sT);sT=setTimeout(()=>$('#snack').classList.remove('show'),4000)}
+function clr(){if(Object.keys(cart).length&&confirm('Remove all items from your cart?')){cart={};SV('dd_cart',cart);sync()}}
+
+// Tables
+const cap=n=>{const t=C.tableCapacities;return t.small.includes(n)?2:t.medium.includes(n)?4:t.large.includes(n)?6:t.vip.includes(n)?8:4};
+$('#tg').innerHTML=Array.from({length:C.tableCount},(_,k)=>`<button class="tb" data-t="${k+1}" onclick="pick(${k+1},event)"><b>${k+1}</b><small>👥 ${cap(k+1)}</small></button>`).join('');
+function openT(){$$('.tb').forEach(b=>b.classList.toggle('a',b.dataset.t==table&&mode!='take'));$('#tm').classList.add('show')}
+function pick(n,ev){if(ev){const b=ev.currentTarget,r=document.createElement('span'),x=b.getBoundingClientRect();r.className='rp';r.style.left=ev.clientX-x.left+'px';r.style.top=ev.clientY-x.top+'px';b.appendChild(r);$$('.tb').forEach(t=>t.classList.toggle('a',t==b))}
+ table=n;mode=n?'dine':'take';SV('dd_table',table);SV('dd_mode',mode);rc();setTimeout(()=>$('#tm').classList.remove('show'),n?450:0)}
+
+// Order form
+function setM(m){fmode=m;$('#m-d').classList.toggle('a',m=='dine');$('#m-t').classList.toggle('a',m=='take');$('#f-t').style.display=m=='dine'?'':'none'}
+function openF(){if(!Object.keys(cart).length){snack('Add a dish first');return}
+ $('#cn').value=LS('dd_name')||'';$('#cp').value=LS('dd_phone')||'';$('#ct').value=table||'';setM(mode=='take'?'take':'dine');$$('.fld').forEach(x=>x.classList.remove('err'));cartOpen(0);$('#fm').classList.add('show')}
+function bad(id,msg){const e=$(id);e.classList.remove('err');void e.offsetWidth;e.classList.add('err');if(msg)e.querySelector('em').textContent=msg;return 1}
+function send(){
+ const name=$('#cn').value.trim(),ph=$('#cp').value.trim(),tn=parseInt($('#ct').value,10);let e=0;$$('.fld').forEach(x=>x.classList.remove('err'));
+ if(!name)e=bad('#f-n');if(!/^\d{10}$/.test(ph))e=bad('#f-p');
+ if(fmode=='dine'&&!(tn>=1&&tn<=C.tableCount))e=bad('#f-t','Enter a table between 1 and '+C.tableCount);
+ if(e)return;
+ mode=fmode;table=fmode=='dine'?tn:table;SV('dd_mode',mode);SV('dd_table',table);SV('dd_name',name);SV('dd_phone',ph);
+ const t=totals(),p=n=>n.toFixed(2),time=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}),note=$('#cs').value.trim();
+ const lines=Object.keys(cart).map((id,k)=>{const i=items[id],c=cart[id];return `${k+1}. ${i.n} × ${c.q} — ${cur}${p(i.p*c.q)}`+(c.note?`\n   📝 Note: ${c.note}`:'')}).join('\n');
+ const L='━━━━━━━━━━━━━━━━━━━━';
+ const msg=`🍽️ *NEW ORDER — ${C.restaurantName}*\n${L}\n📋 *Order Details:*\n\n${lines}\n\n${L}\n💰 *Price Breakdown:*\nSubtotal:        ${cur}${p(t.sub)}\nGST (${C.gstPercent}%):        ${cur}${p(t.gst)}\nPacking:         ${cur}${p(t.pk)}\n*Grand Total:    ${cur}${p(t.tot)}*\n${L}\n🪑 Table No: ${mode=='dine'?table:'N/A'}  |  ${mode=='dine'?'Dine-in':'Takeaway'}\n👤 Name: ${name}\n📞 Phone: ${ph}\n⏰ Time: ${time}\n${L}\n💬 Special Request: ${note||'None'}`;
+ window.open(`https://wa.me/${C.whatsappNumber}?text=${encodeURIComponent(msg)}`,'_blank');
+ $('#fm').classList.remove('show');cart={};SV('dd_cart',cart);$('#cs').value='';cc.textContent='0/150';sync();
+ ok.querySelectorAll('.cf').forEach(x=>x.remove());
+ for(let k=0;k<50;k++){const c=document.createElement('i');c.className='cf';c.style.cssText=`left:${Math.random()*100}%;background:${['#c9a84c','#f0d080','#8b6914','#fff'][k%4]};animation-delay:${Math.random()*.8}s`;ok.appendChild(c)}
+ ok.classList.add('show')}
+
+// Scroll: spy + back-to-top
+addEventListener('scroll',()=>{$('#top').classList.toggle('show',scrollY>300);let a=0;M.forEach((_,i)=>{const s=document.getElementById('s'+i);if(s&&s.getBoundingClientRect().top<=140)a=i+1});act(a)},{passive:true});
+
+// Particles
+(function(){const cv=$('#fx'),x=cv.getContext('2d');let w,h;const rs=()=>{w=cv.width=innerWidth;h=cv.height=innerHeight};rs();addEventListener('resize',rs);
+ const P=Array.from({length:50},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+.4,v:Math.random()*.4+.15,a:Math.random()*.5+.2}));
+ (function d(){x.clearRect(0,0,w,h);P.forEach(p=>{p.y-=p.v;p.x+=Math.sin(p.y/40)*.3;if(p.y<-5){p.y=h+5;p.x=Math.random()*w}x.fillStyle=`rgba(240,208,128,${p.a})`;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()});requestAnimationFrame(d)})()})();
+
+// Init: skeleton, then menu
+$('#menu').innerHTML='<section><div class="grid">'+'<div class="card sk"></div>'.repeat(6)+'</div></section>';rc();act(0);
+setTimeout(()=>{render();act(0);if(!mode)openT()},600);
+</script></body></html>
